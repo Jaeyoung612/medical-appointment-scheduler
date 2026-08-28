@@ -33,4 +33,31 @@ router.get('/dentists/:id/slots', async (req, res) => {
     }
 });
 
+router.post('/appointments', async (req, res) => {
+    const { patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason } = req.body;
+
+    if (!patient_id || !dentist_id || !appointment_date || !appointment_time || !appointment_type) {
+    return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+    const [existing] = await db.query(
+        'SELECT id FROM appointments WHERE dentist_id = ? AND appointment_date = ? AND appointment_time = ?',
+        [dentist_id, appointment_date, appointment_time]
+    );
+    if (existing.length > 0) {
+        return res.status(409).json({ error: 'This slot is already booked' });
+    }
+
+    const [result] = await db.query(
+        'INSERT INTO appointments (patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason) VALUES (?, ?, ?, ?, ?, ?)',
+        [patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason || null]
+    );
+
+    res.status(201).json({ id: result.insertId, message: 'Appointment created' });
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

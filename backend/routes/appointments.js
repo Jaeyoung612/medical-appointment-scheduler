@@ -115,4 +115,29 @@ router.get('/appointments', async (req, res) => {
     }
 });
 
+router.patch('/appointments/:id/status', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ['completed', 'uncompleted'];
+    if (!validStatuses.includes(status)) {
+        return res.status(400).json({ error: 'Invalid status value' });
+    }
+
+    try {
+        const [result] = await db.query(
+            'UPDATE appointments SET status = ? WHERE id = ?',
+            [status, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404),json({ error: 'Appointment not found' });
+        }
+
+        res.json({ message: 'Status updated' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

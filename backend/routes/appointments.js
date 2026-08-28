@@ -60,4 +60,59 @@ router.post('/appointments', async (req, res) => {
     }
 });
 
+router.get('/appointments/mine/:patientId', async (req, res) => {
+    const { patientId } = req.params;
+
+    try {
+    const [rows] = await db.query(
+        `SELECT a.id, a.appointment_date, a.appointment_time, a.appointment_type, a.reason, a.status, d.name AS dentist_name
+        FROM appointments a
+        JOIN dentists d ON a.dentist_id = d.id
+        WHERE a.patient_id = ?
+        ORDER BY a.appointment_date, a.appointment_time`,
+        [patientId]
+    );
+
+    const upcoming = rows.filter(r => r.status === 'confirmed');
+    const past = rows.filter(r => r.status !== 'confirmed');
+
+    res.json({ upcoming, past });
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
+
+router.delete('/appointments/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+    const [result] = await db.query('DELETE FROM appointments WHERE id = ?', [id]);
+
+    if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    res.json({ message: 'Appointment cancelled' });
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/appointments', async (req, res) => {
+    try {
+    const [rows] = await db.query(
+        `SELECT a.id, a.appointment_date, a.appointment_time, a.appointment_type, a.reason, a.status,
+                d.name AS dentist_name, u.name AS patient_name
+        FROM appointments a
+        JOIN dentists d ON a.dentist_id = d.id
+        JOIN users u ON a.patient_id = u.id
+        ORDER BY a.appointment_date, a.appointment_time`
+    );
+
+    res.json(rows);
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

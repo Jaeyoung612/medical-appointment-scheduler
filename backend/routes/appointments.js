@@ -33,33 +33,6 @@ router.get('/dentists/:id/slots', async (req, res) => {
     }
 });
 
-router.post('/appointments', async (req, res) => {
-    const { patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason } = req.body;
-
-    if (!patient_id || !dentist_id || !appointment_date || !appointment_time || !appointment_type) {
-    return res.status(400).json({ error: 'Missing required fields' });
-    }
-
-    try {
-    const [existing] = await db.query(
-        'SELECT id FROM appointments WHERE dentist_id = ? AND appointment_date = ? AND appointment_time = ?',
-        [dentist_id, appointment_date, appointment_time]
-    );
-    if (existing.length > 0) {
-        return res.status(409).json({ error: 'This slot is already booked' });
-    }
-
-    const [result] = await db.query(
-        'INSERT INTO appointments (patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason) VALUES (?, ?, ?, ?, ?, ?)',
-        [patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason || null]
-    );
-
-    res.status(201).json({ id: result.insertId, message: 'Appointment created' });
-    } catch (err) {
-    res.status(500).json({ error: err.message });
-    }
-});
-
 router.get('/appointments/mine/:patientId', async (req, res) => {
     const { patientId } = req.params;
 
@@ -91,6 +64,11 @@ router.delete('/appointments/:id', async (req, res) => {
     if (result.affectedRows === 0) {
         return res.status(404).json({ error: 'Appointment not found' });
     }
+
+    await db.query(
+        'INSERT INTO notifications (message, type) VALUES (?, ?)',
+        [`Appointment cancelled (ID: ${id})`,'cancelled']
+    );
 
     res.json({ message: 'Appointment cancelled' });
     } catch (err) {
@@ -131,7 +109,7 @@ router.patch('/appointments/:id/status', async (req, res) => {
         );
 
         if (result.affectedRows === 0) {
-            return res.status(404),json({ error: 'Appointment not found' });
+            return res.status(404).json({ error: 'Appointment not found' });
         }
 
         res.json({ message: 'Status updated' });
@@ -140,6 +118,55 @@ router.patch('/appointments/:id/status', async (req, res) => {
     }
 });
 
+router.post('/appointments', async (req, res) => {
+    const { patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason } = req.body;
 
+    if (!patient_id || !dentist_id || !appointment_date || !appointment_time || !appointment_type) {
+    return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    try {
+    const [existing] = await db.query(
+        'SELECT id FROM appointments WHERE dentist_id = ? AND appointment_date = ? AND appointment_time = ?',
+        [dentist_id, appointment_date, appointment_time]
+    );
+    if (existing.length > 0) {
+        return res.status(409).json({ error: 'This slot is already booked' });
+    }
+
+    const [result] = await db.query(
+        'INSERT INTO appointments (patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason) VALUES (?, ?, ?, ?, ?, ?)',
+        [patient_id, dentist_id, appointment_date, appointment_time, appointment_type, reason || null]
+    );
+
+    await db.query(
+        'INSERT INTO notifications (message, type) VALUES (?, ?)',
+        [`New appointment created (ID: ${result.insertId})`, 'created']
+    );
+
+    res.status(201).json({ id: result.insertId, message: 'Appointment created' });
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/notifications/unread-count', async (req, res) => {
+    try {
+    const [[result]] = await db.query('SELECT COUNT(*) AS count FROM notifications WHERE is_read = FALSE');
+    res.json({ count: result.count });
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/notifications', async (req, res) => {
+    try {
+    const [rows] = await db.query('SELECT * FROM notifications ORDER BY created_at DESC LIMIT 20');
+    await db.query('UPDATE notifications SET is_read = TRUE');
+    res.json(rows);
+    } catch (err) {
+    res.status(500).json({ error: err.message });
+    }
+});
 
 module.exports = router;

@@ -3,12 +3,14 @@ const cors = require('cors');
 const db = require('./db');
 const authRoutes = require('./routes/auth');
 const dentistRoutes = require('./routes/dentists');
+const appointmentRoutes = require('./routes/appointments');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api', authRoutes);
 app.use('/api', dentistRoutes);
+app.use('/api', appointmentRoutes);
 
 app.get('/', (req, res) => {
     res.send('Sever is running!');

@@ -17,7 +17,7 @@ function Dashboard({ setPage }) {
     { date: "2026-02-22", day: "Sun", label: "22" },
   ];
 
-  const times = ["09:00", "10:00", "11:00", "12:00", "14:00", "15:00"];
+  const times = ["09:00", "10:00", "11:00", "12:00", "14:00", "15:00", "16:00"];
 
   const loadAppointments = async () => {
     try {

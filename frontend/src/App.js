@@ -1,7 +1,39 @@
+import { useState } from 'react';
+import PatientBooking from './pages/PatientBooking';
 import './App.css';
 import sunImage from './assets/sun.jpg';
 
 function App() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [page, setPage] = useState('login');
+
+  const handleLogin = async () => {
+  try {
+    const response = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+
+    const data = await response.json();
+
+if (response.ok && data.role === 'patient') {
+  localStorage.setItem('user', JSON.stringify(data));
+  setPage('patient');
+}
+  } catch (error) {
+    console.error('Login error:', error);
+  }
+};
+if (page === 'patient') {
+  return <PatientBooking />;
+}
   return (
     <div className="page">
       <div className="login-screen">
@@ -22,17 +54,28 @@ function App() {
         <div className="form-group">
           <label>Email</label>
 
-          <input type="email" />
+          <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
         <div className="form-group">
           <label>Password</label>
-          <input type="password" />
+          <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
 
-        <button className="login-button">
-          Log in
-        </button>
+        <button
+  className="login-button"
+  onClick={handleLogin}
+>
+  Log in
+</button>
 
         <div className="demo-accounts">
           <p className="demo-title">Demo accounts</p>

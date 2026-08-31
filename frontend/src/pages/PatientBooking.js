@@ -8,24 +8,22 @@ function PatientBooking({ setPage }) {
   const [reason, setReason] = useState("");
   const [notes, setNotes] = useState("");
 
-  const leeTimes = [
-    "09:00",
-    "09:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "14:00",
-    "14:30",
-    "15:00",
-    "15:30",
-  ];
+  const [times, setTimes] = useState([]);
 
-  const kaurTimes = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30"];
+  const loadTimes = async (dentistId, selectedDate) => {
+    const response = await fetch(
+      `http://localhost:5000/api/dentists/${dentistId}/slots?date=${selectedDate}`,
+    );
 
-  const times = dentist === "1" ? leeTimes : kaurTimes;
+    const data = await response.json();
+    setTimes(data);
+  };
+
+  const selectDate = (selectedDate) => {
+    setDate(selectedDate);
+    setTime("");
+    loadTimes(dentist, selectedDate);
+  };
 
   const bookAppointment = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -35,8 +33,8 @@ function PatientBooking({ setPage }) {
       dentist_id: dentist,
       appointment_date: date,
       appointment_time: time,
-      reason: reason,
-      notes: notes,
+      appointment_type: reason,
+      reason: notes,
     };
 
     try {
@@ -50,7 +48,7 @@ function PatientBooking({ setPage }) {
 
       const data = await response.json();
       console.log(data);
-      setPage('success');
+      setPage("success");
     } catch (error) {
       console.log(error);
     }
@@ -71,6 +69,10 @@ function PatientBooking({ setPage }) {
             onClick={() => {
               setDentist("1");
               setTime("");
+
+              if (date) {
+                loadTimes("1", date);
+              }
             }}
           >
             Dr. Lee
@@ -81,6 +83,10 @@ function PatientBooking({ setPage }) {
             onClick={() => {
               setDentist("2");
               setTime("");
+
+              if (date) {
+                loadTimes("2", date);
+              }
             }}
           >
             Dr. Kaur
@@ -90,16 +96,20 @@ function PatientBooking({ setPage }) {
         <h3>Select date</h3>
 
         <div className="date-grid">
-          <button onClick={() => setDate("2026-02-20")}>20</button>
-          <button onClick={() => setDate("2026-02-21")}>21</button>
-          <button onClick={() => setDate("2026-02-22")}>22</button>
-          <button onClick={() => setDate("2026-02-23")}>23</button>
-          <button onClick={() => setDate("2026-02-24")}>24</button>
-          <button onClick={() => setDate("2026-02-25")}>25</button>
-          <button onClick={() => setDate("2026-02-26")}>26</button>
+          <button onClick={() => selectDate("2026-02-20")}>20</button>
+          <button onClick={() => selectDate("2026-02-21")}>21</button>
+          <button onClick={() => selectDate("2026-02-22")}>22</button>
+          <button onClick={() => selectDate("2026-02-23")}>23</button>
+          <button onClick={() => selectDate("2026-02-24")}>24</button>
+          <button onClick={() => selectDate("2026-02-25")}>25</button>
+          <button onClick={() => selectDate("2026-02-26")}>26</button>
         </div>
 
         <h3>Select time</h3>
+
+        {!date && (
+          <p className="time-message">Select a date to view available times.</p>
+          )}
 
         <div className="time-grid">
           {times.map((item) => (

@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import PatientBooking from './pages/PatientBooking';
 import './App.css';
 import sunImage from './assets/sun.jpg';
+import PatientBooking from './pages/PatientBooking';
+import BookingSuccess from './pages/BookingSuccess';
+import MyAppointments from './pages/MyAppointments';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -32,7 +34,15 @@ if (response.ok && data.role === 'patient') {
   }
 };
 if (page === 'patient') {
-  return <PatientBooking />;
+  return <PatientBooking setPage={setPage} />;
+}
+
+if (page === 'success') {
+  return <BookingSuccess setPage={setPage} />;
+}
+
+if (page === 'appointments') {
+  return <MyAppointments />;
 }
   return (
     <div className="page">

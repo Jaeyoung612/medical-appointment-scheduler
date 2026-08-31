@@ -1,48 +1,62 @@
 .appointments-page {
-    width: 390px;
-    min-height: 100vh;
-    margin: auto;
-    background: white;
+  width: 390px;
+  min-height: 100vh;
+  margin: auto;
+  background: white;
 }
 
 .appointments-header {
-    background: #6fc3e4;
-    color: white;
-    padding: 20px;
+  background: #6fc3e4;
+  color: white;
+  padding: 20px;
 }
 
 .appointments-header h2 {
-    margin: 0;
+  margin: 0;
 }
 
 .appointments-content {
-    padding: 20px;
+  padding: 20px;
 }
 
 .tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .tabs button {
-    padding: 10px;
+  padding: 10px;
 }
 
 .appointment-card {
-    background: #fbf7ed;
-    padding: 20px;
+  background: #fbf7ed;
+  padding: 20px;
 }
 
 .appointment-card h3 {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .cancel-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: none;
-    background: #ffc93c;
-    font-weight: bold;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  background: #ffc93c;
+  font-weight: bold;
+}
+
+.active-tab {
+  background: #6fc3e4;
+}
+
+.empty-appointments {
+  text-align: center;
+  padding-top: 80px;
+}
+
+.empty-image {
+  width: 90px;
+  margin-bottom: 20px;
 }

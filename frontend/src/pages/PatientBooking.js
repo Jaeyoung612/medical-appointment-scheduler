@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PatientBooking.css";
 
-function PatientBooking() {
+function PatientBooking({ setPage }) {
   const [dentist, setDentist] = useState("1");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -50,6 +50,7 @@ function PatientBooking() {
 
       const data = await response.json();
       console.log(data);
+      setPage('success');
     } catch (error) {
       console.log(error);
     }

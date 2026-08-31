@@ -1,0 +1,126 @@
+.dashboard-page {
+  min-height: 100vh;
+  background: white;
+}
+
+.dashboard-header {
+  background: #6fc3e4;
+  color: white;
+  padding: 20px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+}
+
+.dashboard-layout {
+  display: flex;
+}
+
+.sidebar {
+  width: 180px;
+  min-height: calc(100vh - 60px);
+  padding: 20px;
+  background: #fbf7ed;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+}
+
+.lee-button {
+  background: #f5d9be;
+}
+
+.kaur-button {
+  background: #d6eac3;
+}
+
+.add-button {
+  margin-top: auto;
+  background: #ffc93c;
+  font-weight: bold;
+}
+
+.calendar {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.calendar-row {
+  display: grid;
+  grid-template-columns: 70px repeat(7, 1fr);
+}
+
+.day-header {
+  text-align: center;
+  padding: 12px;
+  background: #f2f2f2;
+  border: 1px solid #ddd;
+}
+
+.time-cell {
+  padding: 10px;
+  font-size: 12px;
+  border: 1px solid #ddd;
+}
+
+.calendar-cell {
+  min-height: 88px;
+  padding: 4px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appointment {
+  min-width: 110px;
+  padding: 7px;
+  font-size: 12px;
+}
+
+.appointment p {
+  margin: 3px 0;
+}
+
+.appointment.lee {
+  background: #f5d9be;
+}
+
+.appointment.kaur {
+  background: #d6eac3;
+}
+
+.add-panel {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 420px;
+  height: calc(100vh - 60px);
+  background: white;
+  border-left: 1px solid #ddd;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.day-header span {
+  font-size: 10px;
+}
+
+.day-header strong {
+  margin-top: 4px;
+  font-size: 16px;
+}

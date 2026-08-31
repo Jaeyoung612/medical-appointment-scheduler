@@ -3,7 +3,7 @@ const db = require('../db');
 
 const router = express.Router();
 
-const ALL_SLOTS = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','14:00','14:30','15:00','15:30'];
+const ALL_SLOTS = ['09:00','10:00','11:00','12:00','14:00','15:00','16:00'];
 
 router.get('/dentists/:id/slots', async (req, res) => {
     const dentistId = req.params.id;

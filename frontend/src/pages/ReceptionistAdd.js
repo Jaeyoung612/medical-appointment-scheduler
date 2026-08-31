@@ -1,14 +1,14 @@
 import { useState } from "react";
-import "./PatientBooking.css";
+import "./ReceptionistAdd.css";
 
-function PatientBooking({ setPage }) {
+function ReceptionistAdd({ closeAdd, refreshAppointments }) {
+  const [patient, setPatient] = useState("");
   const [dentist, setDentist] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [reason, setReason] = useState("");
-  const [notes, setNotes] = useState("");
-
   const [times, setTimes] = useState([]);
+  const [type, setType] = useState("");
+  const [notes, setNotes] = useState("");
 
   const loadTimes = async (dentistId, selectedDate) => {
     const response = await fetch(
@@ -25,15 +25,13 @@ function PatientBooking({ setPage }) {
     loadTimes(dentist, selectedDate);
   };
 
-  const bookAppointment = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
+  const createAppointment = async () => {
     const appointment = {
-      patient_id: user.id,
+      patient_id: patient,
       dentist_id: dentist,
       appointment_date: date,
       appointment_time: time,
-      appointment_type: reason,
+      appointment_type: type,
       reason: notes,
     };
 
@@ -46,26 +44,38 @@ function PatientBooking({ setPage }) {
         body: JSON.stringify(appointment),
       });
 
-      const data = await response.json();
-      console.log(data);
-      setPage("success");
+      if (response.ok) {
+        refreshAppointments();
+        closeAdd();
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="booking-page">
-      <div className="booking-header">
-        <h2>Book appointment</h2>
+    <div className="receptionist-add-page">
+      <div className="add-header">
+        <button className="close-button" onClick={closeAdd}>
+          ×
+        </button>
+        <h2>Add Appointment</h2>
       </div>
 
-      <div className="booking-content">
+      <div className="receptionist-add-content">
+        <h3>Select patient</h3>
+
+        <select value={patient} onChange={(e) => setPatient(e.target.value)}>
+          <option value="">Select patient</option>
+          <option value="9">Kevin Shin</option>
+          <option value="10">Jonathan Yong Kim</option>
+        </select>
+
         <h3>Select dentist</h3>
 
-        <div className="dentist-options">
+        <div className="add-dentists">
           <button
-            className="dentist-lee"
+            className="add-lee"
             onClick={() => {
               setDentist("1");
               setDate("");
@@ -77,7 +87,7 @@ function PatientBooking({ setPage }) {
           </button>
 
           <button
-            className="dentist-kaur"
+            className="add-kaur"
             onClick={() => {
               setDentist("2");
               setDate("");
@@ -91,52 +101,54 @@ function PatientBooking({ setPage }) {
 
         <h3>Select date</h3>
 
+        <p className="booking-month">February 2026</p>
+
         {!dentist && (
           <p className="date-message">
             Select a dentist to view available dates.
           </p>
         )}
+
         {dentist && (
           <>
-            <p className="booking-month">February 2026</p>
 
-            <div className="date-grid">
-              <button onClick={() => selectDate("2026-02-16")}>
-                <span>Mon</span>
-                <strong>16</strong>
-              </button>
+        <div className="add-dates">
+          <button onClick={() => selectDate("2026-02-16")}>
+            <span>Mon</span>
+            <strong>16</strong>
+          </button>
 
-              <button onClick={() => selectDate("2026-02-17")}>
-                <span>Tue</span>
-                <strong>17</strong>
-              </button>
+          <button onClick={() => selectDate("2026-02-17")}>
+            <span>Tue</span>
+            <strong>17</strong>
+          </button>
 
-              <button onClick={() => selectDate("2026-02-18")}>
-                <span>Wed</span>
-                <strong>18</strong>
-              </button>
+          <button onClick={() => selectDate("2026-02-18")}>
+            <span>Wed</span>
+            <strong>18</strong>
+          </button>
 
-              <button onClick={() => selectDate("2026-02-19")}>
-                <span>Thu</span>
-                <strong>19</strong>
-              </button>
+          <button onClick={() => selectDate("2026-02-19")}>
+            <span>Thu</span>
+            <strong>19</strong>
+          </button>
 
-              <button onClick={() => selectDate("2026-02-20")}>
-                <span>Fri</span>
-                <strong>20</strong>
-              </button>
+          <button onClick={() => selectDate("2026-02-20")}>
+            <span>Fri</span>
+            <strong>20</strong>
+          </button>
 
-              <button onClick={() => selectDate("2026-02-21")}>
-                <span>Sat</span>
-                <strong>21</strong>
-              </button>
+          <button onClick={() => selectDate("2026-02-21")}>
+            <span>Sat</span>
+            <strong>21</strong>
+          </button>
 
-              <button onClick={() => selectDate("2026-02-22")}>
-                <span>Sun</span>
-                <strong>22</strong>
-              </button>
-            </div>
-          </>
+          <button onClick={() => selectDate("2026-02-22")}>
+            <span>Sun</span>
+            <strong>22</strong>
+          </button>
+        </div>
+        </>
         )}
 
         <h3>Select time</h3>
@@ -145,7 +157,7 @@ function PatientBooking({ setPage }) {
           <p className="time-message">Select a date to view available times.</p>
         )}
 
-        <div className="time-grid">
+        <div className="add-times">
           {times.map((item) => (
             <button key={item} onClick={() => setTime(item)}>
               {item}
@@ -155,7 +167,7 @@ function PatientBooking({ setPage }) {
 
         <h3>Reason for appointment</h3>
 
-        <select value={reason} onChange={(e) => setReason(e.target.value)}>
+        <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="">Select reason</option>
           <option value="Check-up and clean">Check-up and clean</option>
           <option value="Emergency">Emergency</option>
@@ -168,12 +180,12 @@ function PatientBooking({ setPage }) {
           onChange={(e) => setNotes(e.target.value)}
         />
 
-        <button className="book-button" onClick={bookAppointment}>
-          Book appointment
+        <button className="create-button" onClick={createAppointment}>
+          Create appointment
         </button>
       </div>
     </div>
   );
 }
 
-export default PatientBooking;
+export default ReceptionistAdd;

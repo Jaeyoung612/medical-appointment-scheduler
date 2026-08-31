@@ -51,8 +51,9 @@ function App() {
   }
 
   if (page === "dashboard") {
-    return <Dashboard />;
+    return <Dashboard setPage={setPage} />;
   }
+
   return (
     <div className="page">
       <div className="login-screen">

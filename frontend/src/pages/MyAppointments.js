@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import sunImage from '../assets/sun.jpg';
+import sunImage from "../assets/sun.jpg";
 import "./MyAppointments.css";
 
 function MyAppointments() {
@@ -78,12 +78,28 @@ function MyAppointments() {
         {selectedAppointment && (
           <div className="modal-background">
             <div className="cancel-modal">
-              <h3>Cancel appointment?</h3>
+              <button
+                className="close-modal"
+                onClick={() => setSelectedAppointment(null)}
+              >
+                ×
+              </button>
 
-              <p>{selectedAppointment.dentist_name}</p>
-              <p>{selectedAppointment.appointment_date}</p>
-              <p>{selectedAppointment.appointment_time}</p>
-              <p>{selectedAppointment.appointment_type}</p>
+              <h3>Cancel this appointment?</h3>
+
+              <div className="appointment-details">
+                <p>Dentist</p>
+                <strong>{selectedAppointment.dentist_name}</strong>
+
+                <p>Date</p>
+                <strong>{selectedAppointment.appointment_date}</strong>
+
+                <p>Time</p>
+                <strong>{selectedAppointment.appointment_time}</strong>
+
+                <p>Reason</p>
+                <strong>{selectedAppointment.appointment_type}</strong>
+              </div>
 
               <div className="modal-buttons">
                 <button onClick={() => setSelectedAppointment(null)}>

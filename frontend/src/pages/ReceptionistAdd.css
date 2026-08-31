@@ -1,0 +1,130 @@
+.receptionist-add-page {
+  width: 100%;
+  background: white;
+}
+
+.add-header {
+  background: #6fc3e4;
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.add-header h2 {
+  margin: 0 auto;
+  font-size: 20px;
+}
+
+.close-button {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.receptionist-add-content {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.receptionist-add-content h3 {
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.receptionist-add-content select,
+.receptionist-add-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.receptionist-add-content textarea {
+  height: 70px;
+}
+
+.add-dentists,
+.add-dates,
+.add-times {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.add-dentists button,
+.add-dates button,
+.add-times button {
+  min-width: 60px;
+  padding: 10px;
+  border: none;
+}
+
+.add-lee {
+  background: #f5d9be;
+}
+
+.add-kaur {
+  background: #d6eac3;
+}
+
+.booking-month {
+  color: #3c9fc4;
+  font-weight: bold;
+}
+
+.add-dates button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-dates button span {
+  font-size: 11px;
+}
+
+.add-dates button strong {
+  margin-top: 4px;
+}
+
+.time-message {
+  color: #777;
+}
+
+.create-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: #ffc93c;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.add-panel .receptionist-add-page {
+  width: 420px;
+}
+
+.add-panel .add-header {
+  width: 100%;
+}
+
+.add-panel .receptionist-add-content {
+  width: 100%;
+}
+
+.date-message {
+  background: #f2f2f2;
+  color: #777;
+  padding: 10px;
+}

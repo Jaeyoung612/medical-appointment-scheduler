@@ -69,3 +69,28 @@ textarea {
   background: #f2f2f2;
   padding: 10px;
 }
+
+.booking-month {
+  color: #3c9fc4;
+  font-weight: bold;
+}
+
+.date-grid button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-grid button span {
+  font-size: 11px;
+}
+
+.date-grid button strong {
+  margin-top: 4px;
+}
+
+.date-message {
+  background: #f2f2f2;
+  color: #777;
+  padding: 10px;
+}

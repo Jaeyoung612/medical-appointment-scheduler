@@ -43,11 +43,10 @@ body {
 }
 
 .sun-image {
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
   margin-top: 15px;
-  ;
 }
 
 h2 {

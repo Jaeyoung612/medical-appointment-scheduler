@@ -100,6 +100,9 @@ function App() {
           <p>
             <strong>Receptionist:</strong> rajesh@email.com
           </p>
+          <p>
+            <strong>test passwords:</strong> test1234
+          </p>
         </div>
       </div>
     </div>

@@ -1,10 +1,15 @@
 import "./BookingSuccess.css";
+import checkIcon from "../assets/check-square-fill.svg";
 
 function BookingSuccess({ setPage }) {
     return (
     <div className="success-page">
         <div className="success-box">
-        <div className="check-icon">✓</div>
+        <img
+        src={checkIcon}
+        alt="Booking successful"
+        className="success-icon"
+        />
 
         <h2>Appointment confirmed!</h2>
 

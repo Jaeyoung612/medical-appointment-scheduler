@@ -128,3 +128,21 @@
   color: #777;
   padding: 10px;
 }
+
+.add-dentists button.selected {
+  border: 2px solid #3c9fc4;
+  font-weight: 700;
+}
+
+.add-dates button.selected {
+  background: #6fc3e4;
+  color: white;
+  border: 2px solid #3c9fc4;
+}
+
+.add-times button.selected {
+  border: 2px solid #f6b000;
+  background: #ffc93c;
+  color: #4a3200;
+  font-weight: 700;
+}

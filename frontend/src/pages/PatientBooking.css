@@ -94,3 +94,21 @@ textarea {
   color: #777;
   padding: 10px;
 }
+
+.dentist-options button.selected,
+.date-grid button.selected {
+  border: 2px solid #3c9fc4;
+  font-weight: 700;
+}
+
+.date-grid button.selected {
+  background: #6fc3e4;
+  color: white;
+}
+
+.time-grid button.selected {
+  border: 2px solid #f6b000;
+  background: #ffc93c;
+  color: #4a3200;
+  font-weight: 700;
+}

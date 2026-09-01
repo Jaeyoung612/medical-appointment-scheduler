@@ -65,7 +65,7 @@ function PatientBooking({ setPage }) {
 
         <div className="dentist-options">
           <button
-            className="dentist-lee"
+            className={`dentist-lee ${dentist === "1" ? "selected" : ""}`}
             onClick={() => {
               setDentist("1");
               setDate("");
@@ -77,7 +77,7 @@ function PatientBooking({ setPage }) {
           </button>
 
           <button
-            className="dentist-kaur"
+            className={`dentist-kaur ${dentist === "2" ? "selected" : ""}`}
             onClick={() => {
               setDentist("2");
               setDate("");
@@ -101,37 +101,58 @@ function PatientBooking({ setPage }) {
             <p className="booking-month">February 2026</p>
 
             <div className="date-grid">
-              <button onClick={() => selectDate("2026-02-16")}>
+              <button 
+              className={date === "2026-02-16" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-16")}
+              >
                 <span>Mon</span>
                 <strong>16</strong>
               </button>
 
-              <button onClick={() => selectDate("2026-02-17")}>
+              <button 
+              className={date === "2026-02-17" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-17")}
+              >
                 <span>Tue</span>
                 <strong>17</strong>
               </button>
 
-              <button onClick={() => selectDate("2026-02-18")}>
+              <button 
+              className={date === "2026-02-18" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-18")}
+              >
                 <span>Wed</span>
                 <strong>18</strong>
               </button>
 
-              <button onClick={() => selectDate("2026-02-19")}>
+              <button 
+              className={date === "2026-02-19" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-19")}
+              >
                 <span>Thu</span>
                 <strong>19</strong>
               </button>
 
-              <button onClick={() => selectDate("2026-02-20")}>
+              <button 
+              className={date === "2026-02-20" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-20")}
+              >
                 <span>Fri</span>
                 <strong>20</strong>
               </button>
 
-              <button onClick={() => selectDate("2026-02-21")}>
+              <button 
+              className={date === "2026-02-21" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-21")}
+              >
                 <span>Sat</span>
                 <strong>21</strong>
               </button>
 
-              <button onClick={() => selectDate("2026-02-22")}>
+              <button 
+              className={date === "2026-02-22" ? "selected" : ""}
+              onClick={() => selectDate("2026-02-22")}
+              >
                 <span>Sun</span>
                 <strong>22</strong>
               </button>
@@ -147,7 +168,9 @@ function PatientBooking({ setPage }) {
 
         <div className="time-grid">
           {times.map((item) => (
-            <button key={item} onClick={() => setTime(item)}>
+            <button key={item} 
+            className={time === item ? "selected" : ""}
+            onClick={() => setTime(item)}>
               {item}
             </button>
           ))}

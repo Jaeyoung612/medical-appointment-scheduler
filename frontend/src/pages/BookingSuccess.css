@@ -14,9 +14,11 @@
     text-align: center;
 }
 
-.check-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
+.success-icon {
+    width: 90px;
+    height: 90px;
+    margin-top: -30px;
+    margin-bottom: 30px;
 }
 
 .success-box h2 {

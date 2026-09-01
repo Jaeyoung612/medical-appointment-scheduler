@@ -37,6 +37,9 @@ function Dashboard({ setPage }) {
     <div className="dashboard-page">
       <div className="dashboard-header">
         <h2>Calendar</h2>
+        <button className="add-button" onClick={() => setShowAdd(true)}>
+          + Add New
+        </button>
       </div>
 
       <div className="dashboard-layout">
@@ -44,23 +47,30 @@ function Dashboard({ setPage }) {
           <h3>February</h3>
 
           <button
-            className="lee-button"
+            className={`filter-lee ${
+              dentistFilter === "Dr. Lee" ? "selected" : ""
+            }`}
             onClick={() => setDentistFilter("Dr. Lee")}
           >
             Dr. Lee
           </button>
 
           <button
-            className="kaur-button"
+            className={`filter-kaur ${
+              dentistFilter === "Dr. Kaur" ? "selected" : ""
+            }`}
             onClick={() => setDentistFilter("Dr. Kaur")}
           >
             Dr. Kaur
           </button>
 
-          <button onClick={() => setDentistFilter("all")}>All Dentists</button>
-
-          <button className="add-button" onClick={() => setShowAdd(true)}>
-            + Add New
+          <button
+            className={`filter-all ${
+              dentistFilter === "all" ? "selected" : ""
+            }`}
+            onClick={() => setDentistFilter("all")}
+          >
+            All Dentists
           </button>
         </div>
 

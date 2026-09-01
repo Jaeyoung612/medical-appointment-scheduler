@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import sunImage from "../assets/sun.jpg";
+import cancelIcon from "../assets/exclamation-circle.svg";
 import "./MyAppointments.css";
 
 function MyAppointments() {
@@ -84,6 +85,12 @@ function MyAppointments() {
               >
                 ×
               </button>
+
+              <img
+              src={cancelIcon}
+              alt="Cancellation"
+              className="cancel-icon"
+              />
 
               <h3>Cancel this appointment?</h3>
 
